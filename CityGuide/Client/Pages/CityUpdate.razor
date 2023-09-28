@@ -1,0 +1,132 @@
+﻿@page "/сityupdate/{id:int}"
+@using CityGuide.Shared;
+@using Microsoft.AspNetCore.SignalR.Client;
+@inject HttpClient HttpClient
+
+<PageTitle>Update City</PageTitle>
+
+@if (CurrentCity == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{   <div class="messages">
+        <p style="color:red"> @ErrorMessage</p>
+        <p style="color:black">@Message</p>
+    </div>
+
+    <div class="container">
+
+       <label ></label>
+
+        <div class="form-control">
+            <div> Name</div>
+            <input type="text" @bind-value=@CurrentCity.Name>
+        </div>
+        <div class="form-control">
+            <div> Foundation Date</div>
+            <input type="date" @bind-value=@CurrentCity.FoundationDate>
+        </div>
+        <div class="form-control">
+            <div>Population</div>
+            <input type="number" @bind-value=@CurrentCity.Population>
+        </div>
+        <a style="margin-top:20px;" class="btn btn-outline-success" @onclick="Update">Update</a>
+    </div>
+
+   
+}
+<style>
+    .form-control{
+        margin-bottom:10px;
+        margin-top:0px !important;
+    }
+    .messages > *{
+        margin:0px !important;
+    }
+</style>
+@code {
+    [Parameter]
+    public int Id { get; set; } 
+
+    public string ErrorMessage = "" ;
+    private string Message  = "";
+    private City? CurrentCity { get; set; }
+    HubConnection? hubConnection;
+
+    void ClearMessages()
+    {
+        Message = "";
+        ErrorMessage = "";
+    }
+    async void Update()
+    {
+        if(hubConnection is not null){
+            await hubConnection.InvokeAsync("UpdateCity", CurrentCity);
+        }
+        else
+        {
+            ClearMessages();
+            Message =  "Connection isn't available now!";
+        }
+    }
+
+    void ReceiveUpdateStatus(ResultStatus status)
+    {
+        if (status == ResultStatus.NullModel)
+        {
+            ClearMessages();
+            ErrorMessage = "Error! City can't be null";
+
+
+        }
+
+        else if (status == ResultStatus.NotFound)
+        {
+            ClearMessages();
+            ErrorMessage = "Error! Current user wasn't found in database";
+        }
+
+        else if (status == ResultStatus.Failed)
+        {
+            ClearMessages();
+            ErrorMessage = "Error! Server has some trouble";
+        }
+        else
+        {
+            ClearMessages();
+            Message = "City was updated successfully!";   
+        }
+       
+    }
+
+    void ReceiveCity(City? city)
+    {
+
+        CurrentCity = city;
+        StateHasChanged();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        hubConnection = new HubConnectionBuilder().WithUrl($"{HttpClient.BaseAddress}CityGuide").Build();
+
+        try
+        {
+            await hubConnection.StartAsync();
+        }
+        catch (Exception exception)
+        {
+            ErrorMessage = "Error" + exception.Message + $"/n Source:{exception.Source} ";
+        }
+        hubConnection.On<ResultStatus>("ReceiveUpdateStatus", this.ReceiveUpdateStatus);
+ 
+
+        hubConnection.On<City>("ReceiveCity", this.ReceiveCity);
+        await hubConnection.InvokeAsync("Get", Id);
+
+    }
+
+
+}

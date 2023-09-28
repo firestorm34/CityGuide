@@ -1,0 +1,53 @@
+is_global = true
+build_property.TargetFramework = net6.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = false
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = browser
+build_property.RootNamespace = CityGuide.Client
+build_property.RootNamespace = CityGuide.Client
+build_property.ProjectDir = C:\.NET\TZ\Blazor_SignalR\CityGuide\CityGuide\Client\
+build_property.RazorLangVersion = 6.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\.NET\TZ\Blazor_SignalR\CityGuide\CityGuide\Client
+build_property._RazorSourceGeneratorDebug = 
+
+[C:/.NET/TZ/Blazor_SignalR/CityGuide/CityGuide/Client/App.razor]
+build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/.NET/TZ/Blazor_SignalR/CityGuide/CityGuide/Client/Pages/Cities.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2l0aWVzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/.NET/TZ/Blazor_SignalR/CityGuide/CityGuide/Client/Pages/CityCreate.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2l0eUNyZWF0ZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/.NET/TZ/Blazor_SignalR/CityGuide/CityGuide/Client/Pages/CityUpdate.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2l0eVVwZGF0ZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/.NET/TZ/Blazor_SignalR/CityGuide/CityGuide/Client/Pages/Index.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXgucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/.NET/TZ/Blazor_SignalR/CityGuide/CityGuide/Client/Shared/SurveyPrompt.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFN1cnZleVByb21wdC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/.NET/TZ/Blazor_SignalR/CityGuide/CityGuide/Client/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/.NET/TZ/Blazor_SignalR/CityGuide/CityGuide/Client/Shared/MainLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE1haW5MYXlvdXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-osqdcygpso
+
+[C:/.NET/TZ/Blazor_SignalR/CityGuide/CityGuide/Client/Shared/NavMenu.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE5hdk1lbnUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-uo85x98kg7

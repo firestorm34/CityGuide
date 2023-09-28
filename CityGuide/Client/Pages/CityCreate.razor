@@ -1,0 +1,112 @@
+﻿@page "/citycreate"
+@using CityGuide.Shared;
+@using Microsoft.AspNetCore.SignalR.Client;
+@inject HttpClient HttpClient
+
+<PageTitle>Add new City</PageTitle>
+       <div class="messages">
+        <p style="color:red"> @ErrorMessage</p>
+        <p style="color:black">@Message</p>
+    </div>
+
+    <div class="container">
+
+        <label></label>
+
+        <div class="form-control">
+            <div> Name</div>
+            <input type="text" @bind-value=@CurrentCity.Name>
+        </div>
+        <div class="form-control">
+            <div> Foundation Date</div>
+            <input type="date" @bind-value=@CurrentCity.FoundationDate>
+        </div>
+        <div class="form-control">
+            <div>Population</div>
+            <input type="number" @bind-value=@CurrentCity.Population>
+        </div>
+        <a style="margin-top:20px;" class="btn btn-outline-success" @onclick="Create">Create</a>
+    </div>
+
+
+
+<style>
+    .form-control {
+        margin-bottom: 10px;
+        margin-top: 0px !important;
+    }
+
+    .messages > * {
+        margin: 0px !important;
+    }
+</style>
+@code {
+    public string ErrorMessage = "";
+    private string Message = "";
+    private City? CurrentCity { get; set; } = new City{ FoundationDate = new DateTime(1000,1,1)};
+    HubConnection? hubConnection;
+
+    void ClearMessages()
+    {
+        Message = "";
+        ErrorMessage = "";
+    }
+
+    async void Create()
+    {
+        if (hubConnection is not null)
+        {
+            await hubConnection.InvokeAsync("CreateCity", CurrentCity);
+        }
+        else
+        {
+            ClearMessages();
+            Message = "Connection isn't available now!";
+        }
+    }
+
+    void ReceiveCreateStatus(ResultStatus status)
+    {
+        if (status == ResultStatus.NullModel)
+        {
+            ClearMessages();
+            ErrorMessage = "Error! City data has to be filled!";
+        }
+        else if(status == ResultStatus.AlreadyExists)
+        {
+            ClearMessages();
+            ErrorMessage = "Error! City with that name already exists!";
+        }
+        else if (status == ResultStatus.Failed)
+        {
+            ClearMessages();
+            ErrorMessage = "Error! Server has some trouble";
+        }
+        else
+        {
+            ClearMessages();
+            Message = "City was created successfully!";
+        }
+
+    }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        hubConnection = new HubConnectionBuilder().WithUrl($"{HttpClient.BaseAddress}CityGuide").Build();
+
+        try
+        {
+            await hubConnection.StartAsync();
+        }
+        catch (Exception exception)
+        {
+            ErrorMessage = "Error" + exception.Message + $"/n Source:{exception.Source} ";
+        }
+        hubConnection.On<ResultStatus>("ReceiveCreateStatus", this.ReceiveCreateStatus);
+
+    }
+
+
+}

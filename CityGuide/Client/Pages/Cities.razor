@@ -1,0 +1,169 @@
+﻿@page "/cities"
+@using CityGuide.Shared;
+@using Microsoft.AspNetCore.SignalR.Client;
+@inject HttpClient HttpClient
+@inject NavigationManager Navigation
+
+<PageTitle>Cities</PageTitle>
+
+@if (CitiesList == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{   <div class="messages">
+     <p style="color:red"> @ErrorMessage</p>
+    <p style="color:black">@Message</p>
+    </div>
+
+    <div class="container cities-list-container" >
+        <div class="row">
+            <div class="col-2">Id</div>
+            <div class="col-2"> Name</div>
+            <div class="col-2"> Population</div>
+            <div class="col-2"> Founded</div>
+            <div class="col-4"> Actionss</div>
+        </div>
+        @foreach (var city in CitiesList)
+            {   
+               
+
+                    <div class="row">
+                        
+                        <div class="col-2 text"> @city.Id</div>
+                        <div class="col-2 text"> @city.Name</div>
+                        <div class="col-2 text">@city.Population</div>
+                        <div class="col-2 text">@city.FoundationDate.ToShortDateString()</div>
+                        <div class="col-2 btns">
+                        <a class="btn-primary btn"  @onclick=@( ()=> NavigateToEdit(city.Id))>
+                        
+                                Edit
+                            @*<NavLink class="nav-link" >
+                                <span class="oi oi-list-rich" aria-hidden="true"></span> Check
+                            </NavLink>
+                        *@
+                        @*href="/cityupdate/@city.Id"*@
+                    </a>
+                </div>
+                <div class="col-2 btns">
+                    <a class="btn-danger btn" @onclick="@( () => DeleteCity(city.Id))">
+
+                        Delete
+                        
+                    </a>
+                </div>
+                    </div>
+                 
+            }
+        <div class="row">
+            <div class="col-2" style="border:none !important;">
+                <a class="btn btn-light create-btn" @onclick=@( ()=> NavigateToCreate())> Create</a>
+            </div>
+        </div>
+       </div>
+
+}
+<style>
+
+    .create-btn {
+        border: none !important;
+        background-color: #cecece;
+    }
+    .create-btn:hover{
+        background-color: #dfdfdf;
+    }
+
+    .cities-list-container{
+        max-width: 980px !important;
+    }
+    div .text{
+        padding-top:7px !important;
+    }
+    div .btns{
+        padding-bottom:10px !important;
+    }
+    .row{
+        margin-bottom: 10px;
+    }
+    .row > *{
+        text-align:center;
+        
+        padding-right:10px;
+        border-bottom: 1px solid black;
+    }
+</style>
+
+@code {
+    private string Message { get; set; } = "";
+    private string ErrorMessage { get; set; } = "";
+    private List<City> CitiesList { get; set; } = new List<City>();
+    HubConnection? hubConnection;
+
+    void NavigateToCreate()
+    {
+        Navigation.NavigateTo("citycreate");
+    }
+
+    void NavigateToEdit(int id)
+    {
+        Navigation.NavigateTo("сityupdate/" + id.ToString());
+    }
+
+    async void DeleteCity(int id)
+    {
+        if (hubConnection is not null)
+        {
+            await hubConnection.InvokeAsync("DeleteCity", id);
+        }
+        else
+        {
+            ErrorMessage = "Error! Server is not available now. Please, try again";
+        }
+    }
+
+    void  ReceiveCities(List<City> cities)
+    { 
+        CitiesList.Clear();
+        CitiesList.AddRange(cities);
+
+        StateHasChanged();
+    }
+
+    void ReceiveDeleteStatus(ResultStatus status)
+    {
+        if (status == ResultStatus.NotFound)
+        {
+            ErrorMessage = "This city is not in database!";
+            ShouldRender();
+        }
+        else
+        {
+        Message = "City was deleted";
+        StateHasChanged();
+        }
+    }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        hubConnection = new HubConnectionBuilder().WithUrl($"{HttpClient.BaseAddress}CityGuide").Build();
+
+        try
+        {
+            await hubConnection.StartAsync();
+        }
+        catch( Exception exception)
+        {
+            ErrorMessage = "Error! Connection was not established, please try to connect again";
+        }
+        hubConnection.On<List<City>>("ReceiveCities", this.ReceiveCities);
+        hubConnection.On<ResultStatus>("ReceiveDeleteStatus", this.ReceiveDeleteStatus);
+        await hubConnection.InvokeAsync("GetAll");
+
+    }
+
+
+
+}
+

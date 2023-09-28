@@ -1,0 +1,12 @@
+C:\.NET\TZ\Blazor_SignalR\CityGuide\CityGuide\Shared\bin\Debug\net6.0\CityGuide.Shared.deps.json
+C:\.NET\TZ\Blazor_SignalR\CityGuide\CityGuide\Shared\bin\Debug\net6.0\CityGuide.Shared.dll
+C:\.NET\TZ\Blazor_SignalR\CityGuide\CityGuide\Shared\bin\Debug\net6.0\CityGuide.Shared.pdb
+C:\.NET\TZ\Blazor_SignalR\CityGuide\CityGuide\Shared\obj\Debug\net6.0\CityGuide.Shared.csproj.AssemblyReference.cache
+C:\.NET\TZ\Blazor_SignalR\CityGuide\CityGuide\Shared\obj\Debug\net6.0\CityGuide.Shared.GeneratedMSBuildEditorConfig.editorconfig
+C:\.NET\TZ\Blazor_SignalR\CityGuide\CityGuide\Shared\obj\Debug\net6.0\CityGuide.Shared.AssemblyInfoInputs.cache
+C:\.NET\TZ\Blazor_SignalR\CityGuide\CityGuide\Shared\obj\Debug\net6.0\CityGuide.Shared.AssemblyInfo.cs
+C:\.NET\TZ\Blazor_SignalR\CityGuide\CityGuide\Shared\obj\Debug\net6.0\CityGuide.Shared.csproj.CoreCompileInputs.cache
+C:\.NET\TZ\Blazor_SignalR\CityGuide\CityGuide\Shared\obj\Debug\net6.0\CityGuide.Shared.dll
+C:\.NET\TZ\Blazor_SignalR\CityGuide\CityGuide\Shared\obj\Debug\net6.0\refint\CityGuide.Shared.dll
+C:\.NET\TZ\Blazor_SignalR\CityGuide\CityGuide\Shared\obj\Debug\net6.0\CityGuide.Shared.pdb
+C:\.NET\TZ\Blazor_SignalR\CityGuide\CityGuide\Shared\obj\Debug\net6.0\ref\CityGuide.Shared.dll
