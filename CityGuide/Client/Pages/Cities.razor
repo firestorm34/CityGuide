@@ -22,7 +22,7 @@ else
             <div class="col-2"> Name</div>
             <div class="col-2"> Population</div>
             <div class="col-2"> Founded</div>
-            <div class="col-4"> Actionss</div>
+            <div class="col-4"> Actions</div>
         </div>
         @foreach (var city in CitiesList)
             {   
@@ -94,7 +94,7 @@ else
 </style>
 
 @code {
-    private string Message { get; set; } = "";
+    private string Message  = "";
     private string ErrorMessage { get; set; } = "";
     private List<City> CitiesList { get; set; } = new List<City>();
     HubConnection? hubConnection;
@@ -129,6 +129,22 @@ else
         StateHasChanged();
     }
 
+    void ReceiveUpdatedCity (City updatedCity)
+    {
+        int index = CitiesList.FindIndex(city => city.Id == updatedCity.Id);
+        if(index >=0){
+            CitiesList[index] = updatedCity;
+            StateHasChanged();
+        }
+
+    }
+
+    void ReceiveDeletedCityId( int deletedCityId )
+    {
+        CitiesList.RemoveAll(city => city.Id == deletedCityId);
+        StateHasChanged();
+    }
+
     void ReceiveDeleteStatus(ResultStatus status)
     {
         if (status == ResultStatus.NotFound)
@@ -138,8 +154,8 @@ else
         }
         else
         {
-        Message = "City was deleted";
-        StateHasChanged();
+            Message = "City was deleted";
+            StateHasChanged();
         }
     }
 
@@ -159,6 +175,8 @@ else
         }
         hubConnection.On<List<City>>("ReceiveCities", this.ReceiveCities);
         hubConnection.On<ResultStatus>("ReceiveDeleteStatus", this.ReceiveDeleteStatus);
+        hubConnection.On<City>("ReceiveUpdatedCity", this.ReceiveUpdatedCity);
+        hubConnection.On<int>("ReceiveDeletedCityId", this.ReceiveDeletedCityId);
         await hubConnection.InvokeAsync("GetAll");
 
     }

@@ -210,15 +210,15 @@
       "mscorlib.dll": "sha256-KqZqU1imWCwJ9UPDElyoolN8s7Yqhjk67wuOohFN5KA=",
       "netstandard.dll": "sha256-kBK\/QJy7\/skP97jqnvXnOFMrhWS8HZ1bsADFK\/gZkyM=",
       "System.Private.CoreLib.dll": "sha256-3webPuyNUXfAFKY5c1tC\/jBVrjZHelBwvXrr1E9VJuk=",
-      "CityGuide.Shared.dll": "sha256-mbnJptV5+FHRWFCYpltPvGpVmsUtfgnCuEo9hPv3zAg=",
-      "CityGuide.Client.dll": "sha256-EIaUbYsI72HACBK84be0g7eCff4wjXNsA4RQdnNN2lI="
+      "CityGuide.Shared.dll": "sha256-16WB+TfZDhihYIsZb3DDZ29djC1LLxeyBUrtlwxeGKo=",
+      "CityGuide.Client.dll": "sha256-LLU26e5Qb6WCh6UCs\/19kTl8yuvfyIlD5cSuMdUm5s4="
     },
     "extensions": null,
     "lazyAssembly": null,
     "libraryInitializers": null,
     "pdb": {
-      "CityGuide.Shared.pdb": "sha256-JfO5apDu6ROMl8fIh1zEpdJCi5oTNoAdVEmfMiOszH0=",
-      "CityGuide.Client.pdb": "sha256-ASFb9ueIdi779WOutwu66GRUI1CspuEd1+G5MpoWFzM="
+      "CityGuide.Shared.pdb": "sha256-jVm8YsrfGzAnKE6FXG6OBYrF+u6VBoNqenK5vNzyusg=",
+      "CityGuide.Client.pdb": "sha256-ydKp+lgaF8IbhUcKBy\/3cWkCbSjMtxd4JV2L6R4I\/HQ="
     },
     "runtime": {
       "dotnet.6.0.13.twf8a5ri5c.js": "sha256-X\/515F1HEzgsDZdY8BJjt8YUwrWngHGZkMnpClhsrpY=",

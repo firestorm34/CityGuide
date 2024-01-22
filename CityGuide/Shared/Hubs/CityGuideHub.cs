@@ -28,19 +28,23 @@ namespace CityGuide.Shared.Hubs
 
         public async Task DeleteCity( int id)
         {
-          ResultStatus status =  (await cityRepository.Delete(id));
-          List<City> citiesList =  await cityRepository.GetAll();
+          ResultStatus status =  await cityRepository.Delete(id);
           await Clients.Caller.SendAsync("ReceiveDeleteStatus", status); 
-          await Clients.All.SendAsync("ReceiveCities", citiesList);
+          if( status== ResultStatus.Success) {
+               await Clients.All.SendAsync("ReceiveDeletedCityId", id);
+          }
+          
         }
 
         public async Task UpdateCity(City city)
         {
             ResultStatus status = await cityRepository.Update(city);
-            List<City> cities = await cityRepository.GetAll();
-            await Clients.AllExcept(new List<String>{ this.Context.ConnectionId}).
-                SendAsync("ReceiveCities", cities);
             await Clients.Caller.SendAsync("ReceiveUpdateStatus", status);
+            if (status == ResultStatus.Success) {
+                await Clients.AllExcept(new List<String>{ this.Context.ConnectionId}).
+                SendAsync("ReceiveUpdatedCity", city);
+            }
+           
         }
 
         public async Task CreateCity( City city)
